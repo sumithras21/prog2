@@ -11,12 +11,18 @@ pool:
   name: Default
 
 steps:
+# Step 1: Verify Maven is available
+- script: mvn -v
+  displayName: 'Verify Maven Installation'
+
+# Step 2: Run Maven build
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '21'                   
+    jdkVersionOption: '21'                    # Use Java 21
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'   
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'  # Correct path for test reports
+    goals: 'package'
